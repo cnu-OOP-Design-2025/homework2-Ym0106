@@ -44,28 +44,28 @@ void doNamespaceTest(){
     cout << "Namespace Test" << endl;
 
     // 정수형 계산기 테스트
-    cout << "[IntCalc] 10 + 3 = " << 0 /*TODO*/ << endl;
-    cout << "[IntCalc] 10 - 3 = " << 0 /*TODO*/ << endl;
-    cout << "[IntCalc] 10 * 3 = " << 0 /*TODO*/ << endl;
-    cout << "[IntCalc] 10 / 3 = " << 0 /*TODO*/ << endl;
+    cout << "[IntCalc] 10 + 3 = " << IntCalc::add(10, 3) << endl;
+    cout << "[IntCalc] 10 - 3 = " << IntCalc::subtract(10, 3) << endl;
+    cout << "[IntCalc] 10 * 3 = " << IntCalc::multiply(10, 3) << endl;
+    cout << "[IntCalc] 10 / 3 = " << IntCalc::divide(10, 3) << endl;
 
-    cout << "[IntCalc] 10.5 + 3.2 = " << 0 /*TODO*/ << endl;
-    cout << "[IntCalc] 10.5 - 3.2 = " << 0 /*TODO*/ << endl;
-    cout << "[IntCalc] 10.5 * 3.2 = " << 0 /*TODO*/ << endl;
-    cout << "[IntCalc] 10.5 / 3.2 = " << 0 /*TODO*/ << endl;
+    cout << "[IntCalc] 10.5 + 3.2 = " << IntCalc::add(10.5, 3.2) << endl;
+    cout << "[IntCalc] 10.5 - 3.2 = " << IntCalc::subtract(10.5, 3.2) << endl;
+    cout << "[IntCalc] 10.5 * 3.2 = " << IntCalc::multiply(10.5, 3.2) << endl;
+    cout << "[IntCalc] 10.5 / 3.2 = " << IntCalc::divide(10.5, 3.2) << endl;
 
 
     // 실수형 계산기 테스트
-    cout << "[FloatCalc] 10 + 3 = " << 0.0f /*TODO*/ << endl;
-    cout << "[FloatCalc] 10 - 3 = " << 0.0f /*TODO*/ << endl;
-    cout << "[FloatCalc] 10 * 3 = " << 0.0f /*TODO*/ << endl;
-    cout << "[FloatCalc] 10 / 3 = " << 0.0f /*TODO*/ << endl;
+    cout << "[FloatCalc] 10 + 3 = " << FloatCalc::add(10, 3) << endl;
+    cout << "[FloatCalc] 10 - 3 = " << FloatCalc::subtract(10, 3) << endl;
+    cout << "[FloatCalc] 10 * 3 = " << FloatCalc::multiply(10, 3) << endl;
+    cout << "[FloatCalc] 10 / 3 = " << FloatCalc::divide(10, 3) << endl;
 
 
-    cout << "[FloatCalc] 10.5 + 3.2 = " << 0.0f /*TODO*/ << endl;
-    cout << "[FloatCalc] 10.5 - 3.2 = " << 0.0f /*TODO*/ << endl;
-    cout << "[FloatCalc] 10.5 * 3.2 = " << 0.0f /*TODO*/ << endl;
-    cout << "[FloatCalc] 10.5 / 3.2 = " << 0.0f /*TODO*/ << endl;
+    cout << "[FloatCalc] 10.5 + 3.2 = " << FloatCalc::add(10.5, 3.2) << endl;
+    cout << "[FloatCalc] 10.5 - 3.2 = " << FloatCalc::subtract(10.5, 3.2) << endl;
+    cout << "[FloatCalc] 10.5 * 3.2 = " << FloatCalc::multiply(10.5, 3.2) << endl;
+    cout << "[FloatCalc] 10.5 / 3.2 = " << FloatCalc::divide(10.5, 3.2) << endl;
 }
 void doTest1(){
     cout << "---------------------------" << endl;
@@ -84,19 +84,19 @@ void doTest2(){
 
     int idx = -1;
     /* TODO: homework1.cpp의 findStudentByStudentID() 함수 호출을 homework2-2.h의 findStudentByStudentID 함수 선언에 맞춰 수정하기 */
-    /*
-    idx = findStudentByStudentID(charlie.id);
-    */
+    idx = findStudentByStudentID(students, numOfStudent, charlie.id);
 
     if(idx >= 0)
         modifyRecord(students, numOfStudent, charlie);
 
     /* TODO: homework1.cpp의 addStudent() 함수 호출를 homework2-2.h의 addStudent 함수 선언에 맞춰 수정하기 */
-    /*
-    addStudent("Ana", 1051, 88, 65);
-    addStudent("Suji", 1052, 90, 93);
-    addStudent("Zhang", 1053, 100, 40);
-    */
+
+    StudentStruct ana("Ana", 1051, 88, 65);
+    StudentStruct suji("Suji", 1052, 90, 93);
+    StudentStruct zhang("Zhang", 1053, 100, 40);
+    addStudent(students, &numOfStudent, ana.name.c_str(), ana.id, ana.record.midterm, ana.record.final);
+    addStudent(students, &numOfStudent, suji.name.c_str(), suji.id, suji.record.midterm, suji.record.final);
+    addStudent(students, &numOfStudent, zhang.name.c_str(), zhang.id, zhang.record.midterm, zhang.record.final);
 
     printBestStudent();
     printAverage();
@@ -107,10 +107,10 @@ void doTest3(){
     std::cout << "Test 3" << std::endl;
 
     /* TODO: homework1.cpp의 addStudent 함수를 homework2-2.h의 addStudent 함수에 맞춰 수정하기 */
-    /*
-    deleteStudent(1011);
-    deleteStudent(1029);
-    */
+    
+    deleteStudent(students, &numOfStudent, 1011);
+    deleteStudent(students, &numOfStudent, 1029);
+    
 
     printStudentList();
 }
@@ -118,7 +118,9 @@ void doTest3(){
 void doPointerTest(int select){
     const int MAX_STUDENTS = 100;
     /* TODO: StudentStruct[MAX_STUDENTS] 메모리 동적 할당 */
-    students = nullptr;
+    students = new StudentStruct[MAX_STUDENTS];
+    numOfStudent = 0;
+
     fillStudentRecord(students, &numOfStudent);
 
     if(students == nullptr)
